@@ -10,7 +10,6 @@
             --bg-color: #FDFBF7;
             --text-main: #3E3E3E;
             --text-accent: #B08D79;
-            --piece-border: #C6A490;
         }
 
         body {
@@ -108,10 +107,12 @@
             padding-left: 20px;
         }
 
+        /* --- 棋盤區域調整 --- */
         .divination-area {
             position: relative;
-            height: 260px;
-            width: 260px;
+            /* 調整容器大小以配合圖片的間距感 */
+            height: 300px;
+            width: 300px;
             margin: 20px auto;
             display: none;
         }
@@ -134,46 +135,63 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 重點修改區域：棋子字體 --- */
+        /* --- 棋子樣式重大更新 (還原圖片風格) --- */
         .chess-piece {
-            width: 65px;
-            height: 65px;
+            width: 68px;   /* 稍微加大，讓字體更有份量 */
+            height: 68px;
             background-color: #FFF;
-            border: 2px solid var(--piece-border);
             border-radius: 50%;
             position: absolute;
             display: flex;
             justify-content: center;
             align-items: center;
             
-            /* 這裡修改了字體優先順序，嘗試抓取系統的隸書或楷體 */
-            font-family: "LiSu", "隸書", "Libian SC", "隸辨", "DFKai-SB", "BiauKai", "標楷體", serif;
+            /* 字體改為楷體優先，還原圖片中的書法筆觸 */
+            font-family: "KaiTi", "BiauKai", "DFKai-SB", "楷體", "標楷體", "LiSu", serif;
             
-            font-size: 1.8rem;
-            /* 取消加粗，讓書法字體的筆觸更自然 */
-            font-weight: normal; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            font-size: 2.2rem; /* 字體放大 */
+            font-weight: 500;  /* 楷體不需要太粗，中等粗細最像 */
+            line-height: 1;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* 輕微陰影增加立體感 */
+            
             opacity: 0;
             transform: scale(0.5);
             transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        /* --------------------------- */
 
-        .piece-red { color: #D64F4F; }
-        .piece-black { color: #333; }
+        /* 紅棋：紅字 + 紅框 */
+        .piece-red { 
+            color: #D62828; /* 更正紅，接近印泥色 */
+            border: 3px solid #D62828; 
+        }
 
-        .pos-1 { top: 0; left: 50%; transform: translateX(-50%); } 
-        .pos-2 { top: 50%; right: 0; transform: translateY(-50%); } 
-        .pos-3 { bottom: 0; left: 50%; transform: translateX(-50%); } 
-        .pos-4 { top: 50%; left: 0; transform: translateY(-50%); } 
-        .pos-5 { top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2; border: 3px solid var(--text-accent); }
+        /* 黑棋：純黑字 + 黑框 */
+        .piece-black { 
+            color: #000; 
+            border: 3px solid #000;
+        }
 
+        /* 根據圖片調整位置，確保呈現十字且有間距 */
+        .pos-1 { top: 0; left: 50%; transform: translateX(-50%); } /* 上 */
+        .pos-2 { top: 50%; right: 0; transform: translateY(-50%); } /* 右 */
+        .pos-3 { bottom: 0; left: 50%; transform: translateX(-50%); } /* 下 */
+        .pos-4 { top: 50%; left: 0; transform: translateY(-50%); } /* 左 */
+        
+        /* 中間那顆 */
+        .pos-5 { 
+            top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); 
+            z-index: 2; 
+        }
+
+        /* 動畫顯示狀態 */
         .show .chess-piece { opacity: 1; }
         .show .pos-1 { transform: translateX(-50%) scale(1); }
         .show .pos-2 { transform: translateY(-50%) scale(1); }
         .show .pos-3 { transform: translateX(-50%) scale(1); }
         .show .pos-4 { transform: translateY(-50%) scale(1); }
-        .show .pos-5 { transform: translate(-50%, -50%) scale(1.15); }
+        /* 中間那顆稍微大一點點，突出重點，但保持樣式一致 */
+        .show .pos-5 { transform: translate(-50%, -50%) scale(1.1); }
 
         .footer {
             margin-top: 40px;
@@ -204,8 +222,9 @@
 
         @media (max-width: 480px) {
             h1 { font-size: 1.8rem; }
-            .divination-area { width: 260px; height: 260px; }
-            .chess-piece { width: 55px; height: 55px; font-size: 1.5rem; }
+            /* 手機版適度縮小容器，但保持間距比例 */
+            .divination-area { width: 280px; height: 280px; }
+            .chess-piece { width: 60px; height: 60px; font-size: 1.8rem; }
             .spirit-guide { font-size: 1rem; }
         }
     </style>
